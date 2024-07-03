@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\OptionController;
+use App\Http\Controllers\Admin\PropertyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('templates.home');
+})->name('home');
+
+Route::prefix('admin')->name('admin.')->group(function(){
+
+    Route::get('/', function(){
+        return view('templates.admin.admin');
+    })->name('index');
+
+    Route::resource('property', PropertyController::class)->except(['show']);
+
+    Route::resource('option', OptionController::class)->except(['show']);
 });
